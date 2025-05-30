@@ -7,8 +7,8 @@ export default createStore({
     playList: [{
       // rid: 29632463437481,
       rid: 79531914,
-      name: "笒鬼鬼音乐",
-      artist: '笒鬼鬼',
+      name: "音乐",
+      artist: 'follow heart',
       pic: 'https://q4.qlogo.cn/headimg_dl?dst_uin=2963246343&spec=640',
     }],
     playListIndex: 0, //默认的下标为0
