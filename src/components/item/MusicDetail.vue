@@ -29,7 +29,7 @@
         </div>
         <!-- 进度条 -->
         <div class="footerProgress">
-            <input type="range" class="range" min="" :max="duration" step="0.05" v-model="currentTime"
+            <input type="range" class="range" min="" :max="getDuration()" step="0.00001" v-model="currentTime"
                 @input="inputTime">
             <div class="leftAndRightTime">
                 <span> {{ getTime() }}</span>
@@ -79,6 +79,7 @@ import { mapMutations, mapState } from 'vuex';  // 引入vuex的辅助函数
 import ItemPlayList from '@/components/item/ItemPlayList.vue';
 
 export default {
+    emits: ['inputTime'],
     data() {
         return {
             isLyricShow: false,
@@ -121,7 +122,7 @@ export default {
         // console.log(this.lyricList);
         this.addDuration();
     },
-    props: ['musicList', 'getTime', 'getTotalTime', 'play', 'isbtnShow', 'addDuration'],
+    props: ['musicList', 'getTime', 'getTotalTime', 'play', 'isbtnShow', 'addDuration', 'getDuration'],
     methods: {
         goPlay: function (num) {
             let index = this.playListIndex + num
@@ -176,15 +177,15 @@ export default {
                 }
             }
             // 如果歌曲播放完毕，自动播放下一曲
-            if (newValue === this.duration) {
-                // 如果下一曲是最后一首，则自动播放第一首
-                if (this.playListIndex === this.playList.length - 1) {
-                    this.updatePlayListIndex(0);
-                    this.play()
-                } else {
-                    this.updatePlayListIndex(this.playListIndex + 1);
-                }
-            }
+            // if (newValue === this.duration) {
+            //     // 如果下一曲是最后一首，则自动播放第一首
+            //     if (this.playListIndex === this.playList.length - 1) {
+            //         this.updatePlayListIndex(0);
+            //         this.play()
+            //     } else {
+            //         this.updatePlayListIndex(this.playListIndex + 1);
+            //     }
+            // }
         },
 
     },

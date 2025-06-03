@@ -27,7 +27,7 @@
     <!-- 底部弹出 -->
     <van-popup v-model:show="deteilShow" position="bottom" :style="{ height: '100%', wdith: '100%' }">
         <MusicDetail :musicList="playList[playListIndex]" :getTime="getTime" :getTotalTime="getTotalTime" :play="play"
-            :isbtnShow="isbtnShow" :addDuration="addDuration" @inputTime="inputTime" />
+            :isbtnShow="isbtnShow" :addDuration="addDuration" :getDuration="getDuration" @inputTime="inputTime" />
     </van-popup>
     <!-- 底部弹出 -->
 </template>
@@ -49,6 +49,7 @@ export default {
         // console.log(this.$refs)
         this.$store.dispatch("getLyric", this.playList[this.playListIndex].rid);
         this.updateTime()
+        this.bindEnd()
     },
     updated() {
         this.$store.dispatch("getLyric", this.playList[this.playListIndex].rid);
@@ -73,6 +74,9 @@ export default {
         getTotalTime() {
             const totalTime = this.$refs.audio.duration;
             return this.formatTime(totalTime);
+        },
+        getDuration() {
+            return this.$refs.audio.duration;
         },
         // 播放音乐
         play: function () {
@@ -102,6 +106,19 @@ export default {
                     // console.log(this.$refs.audio.currentTime)
                 }, 0)
             }, 1000)
+        },
+        // 如果歌曲播放完毕，自动播放下一曲
+        bindEnd: function () {
+            const audio = document.querySelector('audio')
+            audio.addEventListener('ended',(event) => {
+                if (this.playList && this.playList.length > 0) {
+                    let nextIndex = this.playListIndex + 1
+                    if (nextIndex > this.playList.length - 1) {
+                        nextIndex = 0
+                    }
+                    this.updatePlayListIndex(nextIndex)
+                }
+            })
         },
 
         // 解构下方法

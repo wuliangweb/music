@@ -8,7 +8,7 @@
             </svg>
             <span>当前播放列表</span>
         </div>
-        <div class="item" v-for="(item, index) in playList" :key="item">
+        <div class="item" v-for="(item, index) in playList" :key="index">
             <span class="item_Name_Right">
                 <span>{{ item.name }}</span>
                 <p>{{ item.artist }}</p>
