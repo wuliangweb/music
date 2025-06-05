@@ -24,6 +24,6 @@ export function getMusicList(){
 export function getSearchMusic(search){
     return service({
         method: 'GET',
-        url: `?name=${search}&page=1&limit=10`,
+        url: `?name=${search}&page=1&limit=99`,
     })
 }

@@ -19,7 +19,7 @@
     <!-- 歌单详情页列表 -->
     <div class="searchMusicList">
         <div class="itemList">
-            <div class="item" v-for="(item, index) in searchList" :key="index" @click="updataIndex(item)">
+            <div class="item" v-for="(item, index) in searchList" :key="index" @click="updataIndex(item, index)">
                 <img :src="item.pic" alt="">
                 <span class="item_Name_Right">
                     <span>{{ item.name }}</span>
@@ -89,9 +89,9 @@ export default {
             // console.log(res);
             this.searchList = res.data.data;
         },
-        updataIndex:function(item){
-            this.$store.commit("pushPlayList",item);
-            this.$store.commit("updatePlayListIndex",this.$store.state.playList.length-1);
+        updataIndex:function(item, index){
+            this.$store.commit("updatePlayList", this.searchList);
+            this.$store.commit("updatePlayListIndex", index);
         },
         // 解构下方法
         ...mapMutations(['updateSearchShow',])
