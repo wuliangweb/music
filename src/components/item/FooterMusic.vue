@@ -119,6 +119,14 @@ export default {
                     this.updatePlayListIndex(nextIndex)
                 }
             })
+            audio.onerror = (e) => {
+                console.error("自动播放失败", e)
+                let nextIndex = this.playListIndex + 1
+                if (nextIndex > this.playList.length - 1) {
+                    nextIndex = 0
+                }
+                this.updatePlayListIndex(nextIndex)
+            }
         },
 
         // 解构下方法
