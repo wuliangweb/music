@@ -1,5 +1,5 @@
 //引入的组件集中管理，根据vant组件库,插件
-import { Swipe, SwipeItem, Button, Row, Col, Popup } from 'vant';
+import { Swipe, SwipeItem, Button, Row, Col, Popup, Loading  } from 'vant';
 //放入数组中
 let plugins = [
     Swipe,
@@ -7,7 +7,8 @@ let plugins = [
     Button,
     Row,
     Col,
-    Popup
+    Popup,
+    Loading
 ]
 
 export default function getVant(app) {

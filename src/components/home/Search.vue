@@ -28,6 +28,8 @@
             </div>
         </div>
     </div>
+    <div class="layer" v-if="loading"></div>
+    <van-loading type="spinner" v-if="loading" size="60px" />
 </template>
 
 <script>
@@ -37,6 +39,7 @@ import { getSearchMusic } from "@/request/api/home.js"
 export default {
     data() {
         return {
+            loading: false,
             keyWorkList: [],
             searchKey: "",
             searchList: []
@@ -71,9 +74,11 @@ export default {
                 // 保存到localStorage
                 localStorage.setItem("keyWorkList", JSON.stringify(this.keyWorkList));
 
+                this.loading = true
                 let res = await getSearchMusic(this.searchKey);
                 // console.log(res);
                 this.searchList = res.data.data;
+                this.loading = false
 
                 //清空搜索框
                 this.searchKey = ""
@@ -85,9 +90,11 @@ export default {
         },
         // 点击历史记录搜索
         searchHistory: async function (item) {
+            this.loading = true
             let res = await getSearchMusic(item);
             // console.log(res);
             this.searchList = res.data.data;
+            this.loading = false
         },
         updataIndex:function(item, index){
             this.$store.commit("updatePlayList", this.searchList);
@@ -100,7 +107,7 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 .searchTop {
     width: 100%;
     height: 1rem;
@@ -231,5 +238,22 @@ export default {
             }
         }
     }
+}
+.van-loading {
+    position: absolute !important;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+/*遮罩层样式*/
+.layer{
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 </style>
