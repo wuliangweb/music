@@ -141,11 +141,31 @@ export default {
         ])
     },
     watch: {
-        playListIndex: function () {//如果下标发生了改变，就自动播放音乐
-            this.$refs.audio.autoplay = true
-            if (this.$refs.audio.paused) {//本来是暂停状态
-                this.updateIsbtnShow(false)
-            }
+        playListIndex: function (nval) {//如果下标发生了改变，就自动播放音乐
+            // this.$refs.audio.autoplay = true
+            // if (this.$refs.audio.paused) {//本来是暂停状态
+            //     this.updateIsbtnShow(false)
+            // }
+            // this.play()
+            const audio = this.$refs.audio
+            
+            // 1. 暂停并重置当前音频
+            audio.pause()
+            audio.currentTime = 0
+            this.updateCurrentTime(0)
+            
+            // 2. 移除旧资源引用
+            audio.src = "";
+            audio.load(); // 清除内部状态
+            
+            // 3. 设置新源并播放
+            setTimeout(() => {
+                audio.src = `https://kw-api.cenguigui.cn?id=${this.playList[nval].rid}&type=song&format=mp3`
+                audio.load(); // 重新加载新资源
+                audio.play().catch(e => console.log("自动播放被阻止", e))
+            }, 0)
+            
+            this.updateIsbtnShow(false)
         },
         playList: function () {//如果列表发生改变，就重新加载音乐
             if (this.isbtnShow) {
